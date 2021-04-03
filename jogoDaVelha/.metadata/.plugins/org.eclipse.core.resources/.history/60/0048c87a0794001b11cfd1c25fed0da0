@@ -1,0 +1,91 @@
+package uninter;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import java.awt.Window;
+
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class TelaInicial extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField nomeJogador;
+	private JButton btnOk;
+	
+	private String jogador;
+	
+
+	/**
+	 * Launch the application.
+	 */
+/*	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					TelaInicial frame = new TelaInicial();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}*/
+
+	/**
+	 * Create the frame.
+	 */
+	public TelaInicial() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		setSize(600,600);//deixa a tela com valor de 600px por 600px
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);//deixa os componentes fixo na tela
+		contentPane.setLayout(null);
+		
+		//deixa mensagem para usuário
+		JLabel lblNewLabel = new JLabel("COLOQUE O NOME DO JOGADOR");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel.setBounds(130, 129, 324, 55);
+		contentPane.add(lblNewLabel);
+		
+		//caixa de texto onde o usuário vai colocar o nome do jogador
+		nomeJogador = new JTextField();
+		nomeJogador.setFont(new Font("Tahoma", Font.BOLD, 20));
+		nomeJogador.setBounds(130, 232, 324, 37);
+		contentPane.add(nomeJogador);
+		nomeJogador.setColumns(10);
+		
+		//Botão OK
+		btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				jogador = nomeJogador.getText();
+				//JOptionPane.showMessageDialog(null, "Nome do jogar é " + jogador);
+				TelaInicial frame = new TelaInicial();
+				frame.setVisible(false);
+				
+				Tabuleiro tabuleiro = new Tabuleiro();
+				tabuleiro.setVisible(true);
+
+				
+			}
+		});
+		btnOk.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnOk.setBounds(230, 324, 123, 55);
+		contentPane.add(btnOk);
+	}
+
+}

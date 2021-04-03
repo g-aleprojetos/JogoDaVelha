@@ -1,0 +1,75 @@
+package uninter;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class telaNomeJogador extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField nomeJogador;
+	
+	private String jogador;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					TelaNomeJogador frame = new TelaNomeJogador();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public telaNomeJogador() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		setSize(600,600);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("DIGITE O NOME DO JOGADOR");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel.setBounds(150, 178, 283, 62);
+		contentPane.add(lblNewLabel);
+		
+		nomeJogador = new JTextField();
+		nomeJogador.setBounds(150, 279, 283, 43);
+		contentPane.add(nomeJogador);
+		nomeJogador.setColumns(10);
+		
+		JButton btnNewButton = new JButton("OK");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				jogador = nomeJogador.getText();
+				JOptionPane.showMessageDialog(null, "Nome digitado " + jogador);
+				
+			}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		btnNewButton.setBounds(234, 372, 116, 43);
+		contentPane.add(btnNewButton);
+	}
+}

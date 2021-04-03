@@ -1,0 +1,13 @@
+package uninter;
+
+import javax.swing.JFrame;
+
+public class Tabuleiro extends JFrame{
+
+	public Tabuleiro() {
+	
+	//	configurarTela();
+	}
+
+
+}
