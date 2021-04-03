@@ -99,7 +99,14 @@ public class TelaInicial extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				jogador = nomeJogador.getText();
-				JOptionPane.showMessageDialog(null, jogador);
+				
+				Tabuleiro tabuleiro = new Tabuleiro();
+				tabuleiro.setVisible(true);
+				dispose();
+			
+				//	JOptionPane.showMessageDialog(null, "foi");
+	
+				
 			}
 		});
 		btnOK.setBackground(new Color(128, 128, 128));
