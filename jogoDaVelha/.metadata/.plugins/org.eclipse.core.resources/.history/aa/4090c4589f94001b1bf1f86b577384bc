@@ -1,0 +1,10 @@
+package uninter;
+
+public class Principal {
+
+	public static void main(String[] args) {
+		TelaInicial tabuleiro = new TelaInicial();
+		tabuleiro.setVisible(true);
+	}
+
+}
