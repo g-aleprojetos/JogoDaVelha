@@ -28,8 +28,7 @@ public class TelaInicial extends JFrame {
 	private JPanel contentPane;
 	private JTextField nomeJogador;
 	
-	String jogador;   
-
+	
 	/**
 	 * Create the frame.
 	 */
@@ -98,15 +97,17 @@ public class TelaInicial extends JFrame {
 		btnOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				jogador = nomeJogador.getText();
+						
+				Jogador usuario = new Jogador();
+				usuario.setNome(nomeJogador.getText());
+				
 				
 				Tabuleiro tabuleiro = new Tabuleiro();
+				
 				tabuleiro.setVisible(true);
 				dispose();
-			
-				//	JOptionPane.showMessageDialog(null, "foi");
-	
-				
+				//tabuleiro.nomeDoJogador(usuario);
+							
 			}
 		});
 		btnOK.setBackground(new Color(128, 128, 128));

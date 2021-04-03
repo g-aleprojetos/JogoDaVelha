@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Color;
@@ -18,26 +20,15 @@ public class Tabuleiro extends JFrame {
 	private JPanel contentPane;
 	
 	Bloco[] blocos = new Bloco[9];// cria os blocos onde vai ficar os botões do jogo
+	String nomeJogador;
+	String texto = "jogador 1";
+	
 
 	/**
-	 * Launch the application.
+	 * Create the frame.  		JOptionPane.showMessageDialog(null, nomeJogador); 
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Tabuleiro frame = new Tabuleiro();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public Tabuleiro() {
 		setTitle("Jogo da Velha");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,18 +39,25 @@ public class Tabuleiro extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		//Texto que indica de quem é a vez de jogar
-		JLabel lblNewLabel = new JLabel("JOGADOR");
-		lblNewLabel.setForeground(new Color(0, 255, 0));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Segoe Print", Font.BOLD, 33));
-		contentPane.add(lblNewLabel, BorderLayout.NORTH);
 		
-		//Tela do jogo
+
+		//texto que mostra de quem é a vez de jogar
+		nomeJogador = Jogador.getNome();	
+		JLabel lInformacao = new JLabel(nomeJogador);
+		lInformacao.setForeground(new Color(0, 255, 0));
+		lInformacao.setHorizontalAlignment(SwingConstants.CENTER);
+		lInformacao.setFont(new Font("Segoe Print", Font.BOLD, 33));
+		contentPane.add(lInformacao, BorderLayout.NORTH);
+	
+		//painel onde vai o jogo
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 0, 0));
 		contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new GridLayout(3, 3, 10, 10));//Colocar uma grade 3 X 3 na tela
+		panel.setLayout(new GridLayout(3, 3, 10, 10));
+		
+	
+	
+		
 		
 		//icrementa os blocos na tela que é um botão
 		for(int i=0; i<9; i++) {
@@ -68,6 +66,10 @@ public class Tabuleiro extends JFrame {
 		panel.add(bloco);
 		}
 	}
+	
+
+	
+
 	
 	//botões para fazer a jogada
 	public class Bloco extends JButton{
