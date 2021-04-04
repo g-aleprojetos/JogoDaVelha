@@ -2,7 +2,11 @@ package uninter;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.AbstractButton;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,9 +23,19 @@ public class Tabuleiro extends JFrame {
 
 	private JPanel contentPane;
 	
+	ImageIcon iconCirculo = new ImageIcon(getClass().getResource("circulo.png"));//instacia a imagem circulo
+	ImageIcon iconX = new ImageIcon(getClass().getResource("X.png"));//instancia a umagem do X
+	
 	Bloco[] blocos = new Bloco[9];// cria os blocos onde vai ficar os botões do jogo
 	String nomeJogador;
+	String computador = "COMPUTADOR";
+	
 	int numeroTeste ;
+	
+	int jogadorVez = 2;
+	
+
+	private AbstractButton lInformacao;
 	
 
 	/**
@@ -56,7 +70,7 @@ public class Tabuleiro extends JFrame {
 		panel.setLayout(new GridLayout(3, 3, 10, 10));
 		
 		numeroTeste = Computador. getSelect();
-		JOptionPane.showMessageDialog(null, numeroTeste); 
+	//	JOptionPane.showMessageDialog(null, jogadorVez); 
 		
 		
 		//icrementa os blocos na tela que é um botão
@@ -65,8 +79,51 @@ public class Tabuleiro extends JFrame {
 		blocos[i] = bloco;
 		panel.add(bloco);
 		}
+			
 	}
 	
+	//método para trocar a vez de jogar
+	public void mudarVez() {
+		
+		if(jogadorVez == 1) {
+			jogadorVez = 2;
+			lInformacao.setText(computador);
+			lInformacao.setForeground(Color.red);
+		}else {
+			jogadorVez = 1;
+			lInformacao.setText(nomeJogador);
+			lInformacao.setForeground(Color.green);
+		}
+	}
+	
+	//método para verificar se alguem venceu
+		public boolean testarVitoria(int jog) {
+			if(blocos[0].quem == jog && blocos[1].quem == jog && blocos[2].quem == jog) {
+				return true;
+			}
+			if(blocos[3].quem == jog && blocos[4].quem == jog && blocos[5].quem == jog) {
+				return true;
+			}
+			if(blocos[6].quem == jog && blocos[7].quem == jog && blocos[8].quem == jog) {
+				return true;
+			}
+			if(blocos[0].quem == jog && blocos[3].quem == jog && blocos[6].quem == jog) {
+				return true;
+			}
+			if(blocos[1].quem == jog && blocos[4].quem == jog && blocos[7].quem == jog) {
+				return true;
+			}
+			if(blocos[2].quem == jog && blocos[5].quem == jog && blocos[8].quem == jog) {
+				return true;
+			}
+			if(blocos[0].quem == jog && blocos[4].quem == jog && blocos[8].quem == jog) {
+				return true;
+			}
+			if(blocos[2].quem == jog && blocos[4].quem == jog && blocos[6].quem == jog) {
+				return true;
+			}
+			return false;
+		}
 
 	
 
@@ -75,8 +132,29 @@ public class Tabuleiro extends JFrame {
 	public class Bloco extends JButton{
 		
 		int quem = 0;
+		
 		public Bloco() {
 			setBackground(Color.white);
+			addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {  //preenche o bloco se for clicado
+					
+					if(quem == 0) {
+						if(jogadorVez == 1) {
+							setIcon(iconCirculo);
+							quem = 1;
+						}else {
+							setIcon(iconX);
+							quem = 2;
+						}
+					}
+					
+					mudarVez();
+				}
+				
+			});
+		
 		}
 		
 	}
