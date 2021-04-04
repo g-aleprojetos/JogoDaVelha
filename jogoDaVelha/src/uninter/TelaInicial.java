@@ -16,6 +16,8 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
+
+import javax.swing.ButtonGroup;
 import javax.swing.DebugGraphics;
 import javax.swing.JRadioButton;
 import java.awt.Color;
@@ -27,6 +29,7 @@ public class TelaInicial extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField nomeJogador;
+	int select = 0;
 	
 	
 	/**
@@ -74,39 +77,60 @@ public class TelaInicial extends JFrame {
 		nomeJogador.setColumns(10);
 		
 		//Botões para escolher onivel de dificuldade
+		
+		ButtonGroup buttonGroup1 = new ButtonGroup();
+		
 		JRadioButton btnRadioDificil = new JRadioButton("Dif\u00EDcil");
 		btnRadioDificil.setBackground(new Color(192, 192, 192));
 		btnRadioDificil.setFont(new Font("Segoe Print", Font.PLAIN, 20));
 		btnRadioDificil.setBounds(367, 438, 109, 23);
 		contentPane.add(btnRadioDificil);
-		
+				
 		JRadioButton btnRadioMedio = new JRadioButton("M\u00E9dio");
 		btnRadioMedio.setBackground(new Color(192, 192, 192));
 		btnRadioMedio.setFont(new Font("Segoe Print", Font.PLAIN, 20));
 		btnRadioMedio.setBounds(228, 438, 109, 23);
 		contentPane.add(btnRadioMedio);
 		
+		
 		JRadioButton btnRadioFacil = new JRadioButton("F\u00E1cil");
+		btnRadioFacil.setSelected(true);
 		btnRadioFacil.setBackground(new Color(192, 192, 192));
 		btnRadioFacil.setFont(new Font("Segoe Print", Font.PLAIN, 20));
 		btnRadioFacil.setBounds(107, 438, 109, 23);
 		contentPane.add(btnRadioFacil);
+				
+		buttonGroup1.add(btnRadioDificil);
+		buttonGroup1.add(btnRadioMedio);
+		buttonGroup1.add(btnRadioFacil);
 		
 		//botão para captar o nome do usuário e levar para o jogo
 		JButton btnOK = new JButton("OK");
 		btnOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-						
+				//envia o nome do usuário para classe do jogador		
 				Jogador usuario = new Jogador();
 				usuario.setNome(nomeJogador.getText());
 				
+				//envia o nivel de dificuldade para classe do computador
+				boolean btnFacil = btnRadioFacil.isSelected();
+				if(btnFacil == true) {select = 0;}
 				
+				boolean btnMedio = btnRadioMedio.isSelected();
+				if(btnMedio == true) {select = 1;}
+				
+				boolean btnDificil = btnRadioDificil.isSelected();
+				if(btnDificil == true) {select = 2;}
+				
+				Computador computador = new Computador();
+				computador.setSelect(select);
+				
+				//inicia a tela do jogo e fecha a tela de inicialização
 				Tabuleiro tabuleiro = new Tabuleiro();
-				
 				tabuleiro.setVisible(true);
 				dispose();
-				//tabuleiro.nomeDoJogador(usuario);
+			
 							
 			}
 		});

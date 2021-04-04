@@ -21,7 +21,7 @@ public class Tabuleiro extends JFrame {
 	
 	Bloco[] blocos = new Bloco[9];// cria os blocos onde vai ficar os botões do jogo
 	String nomeJogador;
-	String texto = "jogador 1";
+	int numeroTeste ;
 	
 
 	/**
@@ -55,8 +55,8 @@ public class Tabuleiro extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(3, 3, 10, 10));
 		
-	
-	
+		numeroTeste = Computador. getSelect();
+		JOptionPane.showMessageDialog(null, numeroTeste); 
 		
 		
 		//icrementa os blocos na tela que é um botão
