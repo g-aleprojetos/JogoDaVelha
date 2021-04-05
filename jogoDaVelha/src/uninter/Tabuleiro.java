@@ -4,6 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
@@ -38,15 +43,8 @@ public class Tabuleiro extends JFrame {
 	int verificar = 0;
 
 	JLabel lInformacao = new JLabel();
+	Timer myTimer = new Timer();
 
-	
-	
-
-	/**
-	 * Create the frame.  		JOptionPane.showMessageDialog(null, nomeJogador); 
-	 */
-
-	
 	public Tabuleiro() {
 		setTitle("Jogo da Velha");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,11 +54,8 @@ public class Tabuleiro extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
-		
 
 		//texto que mostra de quem é a vez de jogar
-		
 		lInformacao.setText(nomeJogador);
 		lInformacao.setForeground(new Color(0, 255, 0));
 		lInformacao.setHorizontalAlignment(SwingConstants.CENTER);
@@ -72,11 +67,7 @@ public class Tabuleiro extends JFrame {
 		panel.setBackground(new Color(0, 0, 0));
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(3, 3, 10, 10));
-		
-	
-	//	JOptionPane.showMessageDialog(null, jogadorVez); 
-		
-		
+
 		//icrementa os blocos na tela que é um botão
 		for(int i=0; i<9; i++) {
 		Bloco bloco = new Bloco();
@@ -84,56 +75,21 @@ public class Tabuleiro extends JFrame {
 		panel.add(bloco);
 		
 		}
-	
-		
 	}
 	
 	//método para trocar a vez de jogar
 	public void mudarVez() {
 		
+		
 		if(jogadorVez == 1) {
-			
-			lInformacao.setText(computador);
-			lInformacao.setForeground(Color.red);
-		
-			for(int i=0; i<array.length; i++) {
 				
-				array[i] = blocos[i].quem;
-			}
-			Computador comp = new Computador();
-			comp.setVetor(array);
+			autoComputer();
 			
-		
-			if(selectNivel == 0) {
-					
-				ComputadorFacil cf = new ComputadorFacil();
-				resp = ComputadorFacil.getArray();
-			
-				for(int i=0; i<9;i++) {
-									
-					if(blocos[i].quem != resp[i]) {
-						blocos[i].quem = 2;
-						blocos[i].setIcon(iconX);
-						rodadas++;
-						verificar = 2;
-					}
-				}
-				view();
-			
-				test();
-			
-					
-			}else if(selectNivel == 1) {
-				//JOptionPane.showMessageDialog(null, selectNivel); 
-			}else {
-				//JOptionPane.showMessageDialog(null, selectNivel); 
-			}
-			
-		
 		}else {
-			jogadorVez = 1;
 			lInformacao.setText(nomeJogador);
 			lInformacao.setForeground(Color.green);
+			jogadorVez = 1;
+			
 		}
 	}
 	
@@ -167,20 +123,27 @@ public class Tabuleiro extends JFrame {
 		}
 		
 		public void test() {
-			
-			
+					
 			//testa quem vai vencer ou se vai dar velha
 			if(testarVitoria(verificar)) {
 				if(verificar == 1) {
+					lInformacao.setText(nomeJogador + " Campeão");
+					lInformacao.setForeground(Color.green);
 					JOptionPane.showMessageDialog(null, "jogador " + nomeJogador + " venceu!");
 					System.exit(0);
 				}else {
+					lInformacao.setText(computador + " Campeão");
+					lInformacao.setForeground(Color.red);
 					JOptionPane.showMessageDialog(null, "O " + computador + " venceu!");
 					System.exit(0);
 				}
 			}
-
-						
+			rodadas++;
+			
+			if(rodadas == 9) {
+				JOptionPane.showMessageDialog(null, "Deu velha!");
+				System.exit(0);
+			}
 		}
 
 	
@@ -197,48 +160,75 @@ public class Tabuleiro extends JFrame {
 				public void actionPerformed(ActionEvent e) {  //preenche o bloco se for clicado
 					
 					if(quem == 0) {
-						if(jogadorVez == 1) {
-							setIcon(iconCirculo);
+						
 							quem = 1;
 							verificar = quem;
-							
-							view();
-							
-							rodadas++;
-							if(rodadas == 9) {
-								JOptionPane.showMessageDialog(null, "Deu velha!");
-								System.exit(0);
+							jogadorVez = 1;
+												
+							for(int i=0; i<9;i++) {
+								
+								if(blocos[i].quem == 1) {
+								
+									blocos[i].setIcon(iconCirculo);
+								}				
 							}
-						
+							
 							test();
+							
 							mudarVez();
-						}
+			
 					}
-		
+				
 				}
 				
 			});
-		
+	
 		}
 		
 	}
 	
-	public void view() {
+	
+	public void autoComputer() {
 		
-		for(int y=0; y<9;y++) {
+		
+		for(int i=0; i<array.length; i++) {
 			
-			System.out.print(resp[y]);
+			array[i] = blocos[i].quem;
+		}
+		Computador comp = new Computador();
+		comp.setVetor(array);
+		
+	
+		 
+		if(selectNivel == 0) {
+				
+			ComputadorFacil cf = new ComputadorFacil();
+			resp = ComputadorFacil.getArray();
+			
+			for(int i=0; i<9;i++) {
 								
+				if(blocos[i].quem != resp[i]) {
+				
+					blocos[i].quem = 2;
+					blocos[i].setIcon(iconX);
+					verificar = 2;
+									
 				}
-		System.out.println(" resposta");
-				for(int x=0; x<9;x++) {
-					
-					System.out.print(blocos[x].quem);
-											
-					}
-				System.out.println("  bloco.quem");
-}
-
+			}
+		
+		}else if(selectNivel == 1) {
+			//JOptionPane.showMessageDialog(null, selectNivel); 
+		}else {
+			//JOptionPane.showMessageDialog(null, selectNivel); 
+		}
+	
+		
+		jogadorVez = 2;
+		
+		test();
+		mudarVez();
+	}
+	
 }
 
 

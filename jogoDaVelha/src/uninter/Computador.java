@@ -1,5 +1,7 @@
 package uninter;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.JOptionPane;
 
 public class Computador {
@@ -21,9 +23,9 @@ public class Computador {
 	public Computador(){
 		
 		if(select == 0) {
-			
+						
 			ComputadorFacil.setArray(vetor);
-		
+	
 		}else if(select == 1) {
 			
 		}else {
