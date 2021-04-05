@@ -27,16 +27,18 @@ public class Tabuleiro extends JFrame {
 	ImageIcon iconX = new ImageIcon(getClass().getResource("X.png"));//instancia a umagem do X
 	
 	Bloco[] blocos = new Bloco[9];// cria os blocos onde vai ficar os botões do jogo
-	String nomeJogador;
-	String computador = "COMPUTADOR";
+	String nomeJogador  = Jogador.getNome();//Recebe o nome do jogador da classe Jogador
+	String computador = "Computador";
 	
-	int numeroTeste ;
-	
-	int jogadorVez = 2;
-	
+	int rodadas = 0;
+	int jogadorVez = 1;
+	int[] array = new int[9];
+	int[] resp = new int[9];
+	int selectNivel = Computador.getSelect();//recebe o nivel de dificuldade da classe Computador
+		
 
-	private AbstractButton lInformacao;
-	
+	JLabel lInformacao = new JLabel();
+
 
 	/**
 	 * Create the frame.  		JOptionPane.showMessageDialog(null, nomeJogador); 
@@ -56,8 +58,8 @@ public class Tabuleiro extends JFrame {
 		
 
 		//texto que mostra de quem é a vez de jogar
-		nomeJogador = Jogador.getNome();	
-		JLabel lInformacao = new JLabel(nomeJogador);
+		
+		lInformacao.setText(nomeJogador);
 		lInformacao.setForeground(new Color(0, 255, 0));
 		lInformacao.setHorizontalAlignment(SwingConstants.CENTER);
 		lInformacao.setFont(new Font("Segoe Print", Font.BOLD, 33));
@@ -69,7 +71,7 @@ public class Tabuleiro extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(3, 3, 10, 10));
 		
-		numeroTeste = Computador. getSelect();
+	
 	//	JOptionPane.showMessageDialog(null, jogadorVez); 
 		
 		
@@ -79,7 +81,8 @@ public class Tabuleiro extends JFrame {
 		blocos[i] = bloco;
 		panel.add(bloco);
 		}
-			
+	
+		
 	}
 	
 	//método para trocar a vez de jogar
@@ -89,6 +92,52 @@ public class Tabuleiro extends JFrame {
 			jogadorVez = 2;
 			lInformacao.setText(computador);
 			lInformacao.setForeground(Color.red);
+		
+			for(int i=0; i<array.length; i++) {
+				
+				array[i] = blocos[i].quem;
+			}
+			Computador comp = new Computador();
+			comp.setVetor(array);
+			
+		
+			if(selectNivel == 0) {
+					
+				ComputadorFacil cf = new ComputadorFacil();
+				resp = ComputadorFacil.getArray();
+			
+				for(int i=0; i<9;i++) {
+					
+				 blocos[i].quem = resp[i];
+					if(blocos[i].quem == 2) {
+						//setIcon(iconX);
+						
+					}
+				
+				
+				}
+			
+				for(int y=0; y<9;y++) {
+					
+					System.out.print(resp[y]);
+										
+						}
+				System.out.println("x");
+						for(int x=0; x<9;x++) {
+							
+							System.out.print(blocos[x].quem);
+													
+							}
+						System.out.println("-");
+					
+				
+			}else if(selectNivel == 1) {
+				//JOptionPane.showMessageDialog(null, selectNivel); 
+			}else {
+				//JOptionPane.showMessageDialog(null, selectNivel); 
+			}
+		
+		
 		}else {
 			jogadorVez = 1;
 			lInformacao.setText(nomeJogador);
@@ -126,8 +175,6 @@ public class Tabuleiro extends JFrame {
 		}
 
 	
-
-	
 	//botões para fazer a jogada
 	public class Bloco extends JButton{
 		
@@ -149,7 +196,22 @@ public class Tabuleiro extends JFrame {
 							quem = 2;
 						}
 					}
-					
+					//testa quem vai vencer ou se vai dar velha
+					if(testarVitoria(quem)) {
+						if(quem == 1) {
+							JOptionPane.showMessageDialog(null, "jogador " + nomeJogador + " venceu!");
+							System.exit(0);
+						}else {
+							JOptionPane.showMessageDialog(null, "O " + computador + " venceu!");
+							System.exit(0);
+						}
+					}
+					rodadas++;
+					if(rodadas == 9) {
+						JOptionPane.showMessageDialog(null, "Deu velha!");
+						System.exit(0);
+					}
+				
 					mudarVez();
 				}
 				
