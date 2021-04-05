@@ -22,7 +22,7 @@ import java.awt.GridLayout;
 public class Tabuleiro extends JFrame {
 
 	private JPanel contentPane;
-	
+		
 	ImageIcon iconCirculo = new ImageIcon(getClass().getResource("circulo.png"));//instacia a imagem circulo
 	ImageIcon iconX = new ImageIcon(getClass().getResource("X.png"));//instancia a umagem do X
 	
@@ -35,10 +35,12 @@ public class Tabuleiro extends JFrame {
 	int[] array = new int[9];
 	int[] resp = new int[9];
 	int selectNivel = Computador.getSelect();//recebe o nivel de dificuldade da classe Computador
-		
+	int verificar = 0;
 
 	JLabel lInformacao = new JLabel();
 
+	
+	
 
 	/**
 	 * Create the frame.  		JOptionPane.showMessageDialog(null, nomeJogador); 
@@ -80,6 +82,7 @@ public class Tabuleiro extends JFrame {
 		Bloco bloco = new Bloco();
 		blocos[i] = bloco;
 		panel.add(bloco);
+		
 		}
 	
 		
@@ -89,7 +92,7 @@ public class Tabuleiro extends JFrame {
 	public void mudarVez() {
 		
 		if(jogadorVez == 1) {
-			jogadorVez = 2;
+			
 			lInformacao.setText(computador);
 			lInformacao.setForeground(Color.red);
 		
@@ -107,36 +110,25 @@ public class Tabuleiro extends JFrame {
 				resp = ComputadorFacil.getArray();
 			
 				for(int i=0; i<9;i++) {
-					
-				 blocos[i].quem = resp[i];
-					if(blocos[i].quem == 2) {
-						//setIcon(iconX);
-						
+									
+					if(blocos[i].quem != resp[i]) {
+						blocos[i].quem = 2;
+						blocos[i].setIcon(iconX);
+						rodadas++;
+						verificar = 2;
 					}
-				
-				
 				}
+				view();
 			
-				for(int y=0; y<9;y++) {
+				test();
+			
 					
-					System.out.print(resp[y]);
-										
-						}
-				System.out.println("x");
-						for(int x=0; x<9;x++) {
-							
-							System.out.print(blocos[x].quem);
-													
-							}
-						System.out.println("-");
-					
-				
 			}else if(selectNivel == 1) {
 				//JOptionPane.showMessageDialog(null, selectNivel); 
 			}else {
 				//JOptionPane.showMessageDialog(null, selectNivel); 
 			}
-		
+			
 		
 		}else {
 			jogadorVez = 1;
@@ -173,6 +165,23 @@ public class Tabuleiro extends JFrame {
 			}
 			return false;
 		}
+		
+		public void test() {
+			
+			
+			//testa quem vai vencer ou se vai dar velha
+			if(testarVitoria(verificar)) {
+				if(verificar == 1) {
+					JOptionPane.showMessageDialog(null, "jogador " + nomeJogador + " venceu!");
+					System.exit(0);
+				}else {
+					JOptionPane.showMessageDialog(null, "O " + computador + " venceu!");
+					System.exit(0);
+				}
+			}
+
+						
+		}
 
 	
 	//botões para fazer a jogada
@@ -191,28 +200,21 @@ public class Tabuleiro extends JFrame {
 						if(jogadorVez == 1) {
 							setIcon(iconCirculo);
 							quem = 1;
-						}else {
-							setIcon(iconX);
-							quem = 2;
+							verificar = quem;
+							
+							view();
+							
+							rodadas++;
+							if(rodadas == 9) {
+								JOptionPane.showMessageDialog(null, "Deu velha!");
+								System.exit(0);
+							}
+						
+							test();
+							mudarVez();
 						}
 					}
-					//testa quem vai vencer ou se vai dar velha
-					if(testarVitoria(quem)) {
-						if(quem == 1) {
-							JOptionPane.showMessageDialog(null, "jogador " + nomeJogador + " venceu!");
-							System.exit(0);
-						}else {
-							JOptionPane.showMessageDialog(null, "O " + computador + " venceu!");
-							System.exit(0);
-						}
-					}
-					rodadas++;
-					if(rodadas == 9) {
-						JOptionPane.showMessageDialog(null, "Deu velha!");
-						System.exit(0);
-					}
-				
-					mudarVez();
+		
 				}
 				
 			});
@@ -221,12 +223,26 @@ public class Tabuleiro extends JFrame {
 		
 	}
 	
+	public void view() {
+		
+		for(int y=0; y<9;y++) {
+			
+			System.out.print(resp[y]);
+								
+				}
+		System.out.println(" resposta");
+				for(int x=0; x<9;x++) {
+					
+					System.out.print(blocos[x].quem);
+											
+					}
+				System.out.println("  bloco.quem");
+}
 
 }
 
 
-
-
+	
 
 
 
