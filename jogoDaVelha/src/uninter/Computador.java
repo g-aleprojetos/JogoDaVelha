@@ -21,21 +21,24 @@ public class Computador {
 	}
 
 	public Computador(){
-		
+		//seleciona o nivel de dificuldade
 		if(select == 0) {
 						
 			ComputadorFacil.setArray(vetor);
-	
-		}else if(select == 1) {
-			
-		}else {
-			
-		}
-		
-		
-	}
-		
 
+		}
+		if(select == 1) {
+			
+			ComputadorMedio.setArray(vetor);
+
+		}
+		if(select == 2){
+			
+			ComputadorDificil.setArray(vetor);
+
+		}
+	
+	}
 	
 	//mostra qual nivel de dificuldade foi escolido
 	public static int getSelect() {
@@ -58,5 +61,6 @@ public class Computador {
 		Computador.vetor = vetor;
 	
 	}
+
 
 }

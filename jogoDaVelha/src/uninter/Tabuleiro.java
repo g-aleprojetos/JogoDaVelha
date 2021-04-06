@@ -39,12 +39,22 @@ public class Tabuleiro extends JFrame {
 	int jogadorVez = 1;
 	int[] array = new int[9];
 	int[] resp = new int[9];
-	int selectNivel = Computador.getSelect();//recebe o nivel de dificuldade da classe Computador
+	int selectNivel;
+	
+	//recebe o nivel de dificuldade da classe Computador
+	public int getSelectNivel() {
+		return selectNivel;
+	}
+
+	public void setSelectNivel(int selectNivel) {
+		this.selectNivel = selectNivel;
+	}
+
 	int verificar = 0;
 
 	JLabel lInformacao = new JLabel();
-	Timer myTimer = new Timer();
-
+	
+	//configura a tela do jogo
 	public Tabuleiro() {
 		setTitle("Jogo da Velha");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -176,7 +186,6 @@ public class Tabuleiro extends JFrame {
 							test();
 							
 							mudarVez();
-			
 					}
 				
 				}
@@ -190,16 +199,21 @@ public class Tabuleiro extends JFrame {
 	
 	public void autoComputer() {
 		
-		
+		//tratamento para enviar o array para a tratamento
 		for(int i=0; i<array.length; i++) {
 			
 			array[i] = blocos[i].quem;
 		}
+		
+		//envia os dados para jogada do comoutador
 		Computador comp = new Computador();
 		comp.setVetor(array);
 		
-	
-		 
+		//manda para tela do computador o nivel de dificuldade
+		Computador en = new Computador();
+		en.setSelect(selectNivel);
+		
+		//nivel facil	 
 		if(selectNivel == 0) {
 				
 			ComputadorFacil cf = new ComputadorFacil();
@@ -212,17 +226,42 @@ public class Tabuleiro extends JFrame {
 					blocos[i].quem = 2;
 					blocos[i].setIcon(iconX);
 					verificar = 2;
-									
 				}
 			}
+		}
+		//nivel médio
+		if(selectNivel == 1) {
 		
-		}else if(selectNivel == 1) {
-			//JOptionPane.showMessageDialog(null, selectNivel); 
-		}else {
-			//JOptionPane.showMessageDialog(null, selectNivel); 
+			ComputadorMedio cm = new ComputadorMedio();
+			resp = ComputadorMedio.getArray();
+			 
+			for(int i=0; i<9;i++) {
+								
+				if(blocos[i].quem != resp[i]) {
+				
+					blocos[i].quem = 2;
+					blocos[i].setIcon(iconX);
+					verificar = 2;
+					}				
+				} 
+			}
+		//nivel difícil
+		if (selectNivel == 2){
+			
+			ComputadorDificil cd = new ComputadorDificil();
+			resp = ComputadorDificil.getArray();
+			
+			for(int i=0; i<9;i++) {
+								
+				if(blocos[i].quem != resp[i]) {
+				
+					blocos[i].quem = 2;
+					blocos[i].setIcon(iconX);
+					verificar = 2;
+				}					
+			}
 		}
 	
-		
 		jogadorVez = 2;
 		
 		test();

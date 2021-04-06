@@ -66,13 +66,13 @@ public class TelaInicial extends JFrame {
 		//texto da parte de cima da tela
 		JLabel lblNewLabel = new JLabel("DIGITE O NOME DO JOGADOR");
 		lblNewLabel.setFont(new Font("Segoe Print", Font.BOLD, 33));
-		lblNewLabel.setBounds(25, 280, 533, 55);
+		lblNewLabel.setBounds(25, 267, 533, 55);
 		contentPane.add(lblNewLabel);
 		
 		//caixa para receber o texto digitado
 		nomeJogador = new JTextField();
 		nomeJogador.setFont(new Font("Segoe Print", Font.BOLD, 33));
-		nomeJogador.setBounds(107, 346, 369, 55);
+		nomeJogador.setBounds(107, 333, 369, 55);
 		contentPane.add(nomeJogador);
 		nomeJogador.setColumns(10);
 		
@@ -83,13 +83,13 @@ public class TelaInicial extends JFrame {
 		JRadioButton btnRadioDificil = new JRadioButton("Dif\u00EDcil");
 		btnRadioDificil.setBackground(new Color(192, 192, 192));
 		btnRadioDificil.setFont(new Font("Segoe Print", Font.PLAIN, 20));
-		btnRadioDificil.setBounds(367, 438, 109, 23);
+		btnRadioDificil.setBounds(367, 427, 109, 23);
 		contentPane.add(btnRadioDificil);
 				
 		JRadioButton btnRadioMedio = new JRadioButton("M\u00E9dio");
 		btnRadioMedio.setBackground(new Color(192, 192, 192));
 		btnRadioMedio.setFont(new Font("Segoe Print", Font.PLAIN, 20));
-		btnRadioMedio.setBounds(228, 438, 109, 23);
+		btnRadioMedio.setBounds(237, 427, 109, 23);
 		contentPane.add(btnRadioMedio);
 		
 		
@@ -97,7 +97,7 @@ public class TelaInicial extends JFrame {
 		btnRadioFacil.setSelected(true);
 		btnRadioFacil.setBackground(new Color(192, 192, 192));
 		btnRadioFacil.setFont(new Font("Segoe Print", Font.PLAIN, 20));
-		btnRadioFacil.setBounds(107, 438, 109, 23);
+		btnRadioFacil.setBounds(107, 427, 109, 23);
 		contentPane.add(btnRadioFacil);
 				
 		buttonGroup1.add(btnRadioDificil);
@@ -123,8 +123,9 @@ public class TelaInicial extends JFrame {
 				boolean btnDificil = btnRadioDificil.isSelected();
 				if(btnDificil == true) {select = 2;}
 				
-				Computador computador = new Computador();
-				computador.setSelect(select);
+				Tabuleiro computador = new Tabuleiro();
+				computador.getSelectNivel();
+				
 				
 				//inicia a tela do jogo e fecha a tela de inicialização
 				Tabuleiro tabuleiro = new Tabuleiro();
@@ -136,17 +137,11 @@ public class TelaInicial extends JFrame {
 		});
 		btnOK.setBackground(new Color(128, 128, 128));
 		btnOK.setFont(new Font("Segoe Print", Font.BOLD, 30));
-		btnOK.setBounds(214, 495, 155, 55);
+		btnOK.setBounds(214, 475, 155, 55);
 		contentPane.add(btnOK);
-		
-
-		
-
-		
-
-		
-
-		
+	
 
 	}
+
+
 }
